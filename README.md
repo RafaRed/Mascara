@@ -1,2 +1,2 @@
 # Mascara
-Start with python mascara.py
+Start with "python mascara.py"
