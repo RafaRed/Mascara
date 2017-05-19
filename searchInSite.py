@@ -5,56 +5,58 @@ import random
 import txtControll
 import time
 
+# Return just words, ignore random stuff
 def returnWords(word,max):
     list = 0;
     wordList = ['','','','',''];
     for w in word:
         if(list < max):
-            pattern = re.compile("([a-z]*[A-Z]*[0-9]*]*)\w{1,}");
+            pattern = re.compile("([a-z]*[A-Z]*]*)\w{1,}");
             if(pattern.match(w)):
                 wordList[list] = pattern.match(w).group();
                 list += 1;
-    #print(wordList)
     return wordList;
 
 
 def getLinkedWord(url, word):
     url = str(url)
+    # Check if there is http in url
     if(re.search("http",url)):
         try:
             r  = requests.get(url)
         except:
             return -1;
         data = r.text
+        # Get all usefull text from url
         soup = BeautifulSoup(data, "html.parser")
-        [s.extract() for s in soup(['style', 'script', '[document]', 'head', 'title'])]
+        # Ignore these texts..
+        [s.extract() for s in soup(['style', 'script', '[document]', 'head'])]
         visible_text = soup.getText()
 
-
-
-        #Text = re.search(word, body);
+        # Split search query
         secret = word.split(' ');
-        secret2 = " "
         b = False
+        # Get a random query word to search on site.
         while (b == False):
-            secret2 = secret[random.randint(0,len(secret)-1)]
+            secret = secret[random.randint(0,len(secret)-1)]
             pattern = re.compile("([a-z]*[A-Z]*[0-9]*]*)\w{1,}");
             if(pattern.match(secret2)):
                 b = True
-        secret = secret2;
-
-        #print("SECRET " + secret)
+        # Try to found words linked to the random select query
         Text = re.search(secret+"(.*)", visible_text)
+        # If cant, get the first 4 letter + word found.
         if(Text is None):
             Text = re.search("([a-z]*[A-Z]*[0-9]*]*)\w{4,}", visible_text)
 
         try:
+            # Get the new 1 ~ 5 querys.
             wl = returnWords(Text.group().split(' '),random.randint(1,5));
             query = wl[0]+" "+wl[1]+" "+wl[2]+" "+wl[3]+" "+wl[4]+" ";
             query = query.replace("  "," ")
             if(query != "    " and txtControll.checkBlackList(query) == False):
                 print("\nData found: " + query + " :)")
                 time.sleep(5)
+                # Return the new querys to save on wordlist
                 return query;
             else:
                 return -1;
@@ -63,7 +65,3 @@ def getLinkedWord(url, word):
 
     else:
         return -1;
-
-    #print ((checkWord(Text.group()).split(' ')[0])+" "+
-    #       (checkWord(Text.group()).split(' ')[1])+" "+
-    #       (checkWord(Text.group()).split(' ')[2]));

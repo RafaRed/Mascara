@@ -1,1 +1,1 @@
-query="Forbidden   "
+query="ScribdExploreEXPLORE   "

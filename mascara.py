@@ -11,6 +11,7 @@ import os
 
 random_avalible = True;
 
+# Return a random text from wordlist to join with stated query.
 def getRandomData():
     afile = open(config.topDir,'r')
     line = next(afile)
@@ -23,41 +24,57 @@ def getRandomData():
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def wait():
+    randomTime = random.randint(config.timer,config.timerMax)
+    while randomTime > 0:
+        clear()
+        print("Wait "+str(randomTime)+" Seconds")
+        time.sleep(1)
+        randomTime -= 1
+    clear()
+
 def init(word):
     clear()
+    # Wait for random time, configure it.
+    wait()
+    # Search from query on google.
     print("Searching url..")
-    time.sleep(random.randint(config.timer,config.timerMax))
     url = "www.google.com.br/search?site=&source=hp&q=";
-    #url = "www.facebook.com/search/top/?q=";
     q = word+" "+getRandomData();
     print("Current query: "+q)
     txtControll.setLastQuery(q,config.lastQueryDir)
     r  = requests.get("http://" +url+q)
-
     data = r.text
-
-    soup = BeautifulSoup(data, "lxml")
+    soup = BeautifulSoup(data, "html.parser")
     data = [];
+    # Get all links
     for link in soup.find_all('a'):
         result = link.get('href');
         if(re.search("url",result)):
+            # Ignore webcache links
             if(not (re.search("webcache",result))):
                 result = result.replace("/url?q=","")
                 data.append(result.split('&sa')[0]);
+    # Get a random url after filters.
     if(random_avalible):
         try:
             link = data[random.randint(0,len(data)-1)];
         except:
             print("error 0 ")
     print("Current link: " + str(link))
+    # Load site and get new querys
     ret = searchInSite.getLinkedWord(link,q);
     if(ret != -1):
+        # Write new querys found on worklist
         txtControll.writeInFile(ret,config.topDir);
         txtControll.setQuery(ret,config.configDir)
-        #init(ret);
-    print("ERROR")
+
+
+# Load wordlist on start
 wordlist = txtControll.loadWordList(config.topDir)
 for i in range(0,len(wordlist)):
     wordlist[i] = wordlist[i].replace('\n','')
+# Start with an infinity loop.
 while(True):
+    #get a random word from wordlist.
     init(wordlist[random.randint(0,len(wordlist)-1)]);
