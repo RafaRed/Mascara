@@ -1,8 +1,8 @@
-topDir = "/Mascara/DataFiles/TopWord"
+topDir = "/DataFiles/TopWord"
 timer = 1;
 timerMax = 2;
-configDir = "/Mascara/query.py"
-lastQueryDir = "/Mascara/DataFiles/LastQuery"
-blacklistDir = "/Mascara/DataFiles/BlackList"
+configDir = "/query.py"
+lastQueryDir = "/DataFiles/LastQuery"
+blacklistDir = "/DataFiles/BlackList"
 user='teste@gmail.com'
 passs='teste'
