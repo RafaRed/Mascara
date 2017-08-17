@@ -1,3 +1,4 @@
+ # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import re
 import requests
@@ -8,6 +9,10 @@ import query
 import txtControll
 import time
 import os
+import browsercookie
+import urllib2
+import GoogleSession
+import requests
 
 random_avalible = True;
 
@@ -42,9 +47,33 @@ def init(word):
     url = "www.google.com.br/search?site=&source=hp&q=";
     q = word+" "+getRandomData();
     print("Current query: "+q)
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.0; it-IT; rv:1.7.12) Gecko/20050915'}
     txtControll.setLastQuery(q,config.lastQueryDir)
-    r  = requests.get("http://" +url+q)
-    data = r.text
+    s = requests.Session()
+
+
+    #r  = s.get("http://" +url+q, headers=headers, cookies={'GAPS': '1:59NH-PXMjnyIKfwda9RPWytK1iVgLQ:c6g05IxIkrDXzX3d'})
+
+    nurl = "http://" +url+q
+    #print nurl
+    #cj = browsercookie.firefox()
+    #opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    #login_html = opener.open(nurl).read()
+    #print login_html
+
+
+    url_login = "https://accounts.google.com/ServiceLogin"
+    url_auth = "https://accounts.google.com/ServiceLoginAuth"
+    session = GoogleSession.SessionGoogle(url_login, url_auth, config.user, config.passs)
+    r = session.get(nurl)
+
+    #print(r.cookies)
+    #with open("r.txt",'w') as f:
+    #    f.write(r.text.encode('utf-8'));
+    #with open("r2.txt",'w') as f:
+    #0    f.write(r2.text.encode('utf-8'));
+
+    data = r
     soup = BeautifulSoup(data, "html.parser")
     data = [];
     # Get all links

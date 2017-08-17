@@ -40,7 +40,7 @@ def getLinkedWord(url, word):
         while (b == False):
             secret = secret[random.randint(0,len(secret)-1)]
             pattern = re.compile("([a-z]*[A-Z]*[0-9]*]*)\w{1,}");
-            if(pattern.match(secret2)):
+            if(pattern.match(secret)):
                 b = True
         # Try to found words linked to the random select query
         Text = re.search(secret+"(.*)", visible_text)
@@ -55,6 +55,8 @@ def getLinkedWord(url, word):
             query = query.replace("  "," ")
             if(query != "    " and txtControll.checkBlackList(query) == False):
                 print("\nData found: " + query + " :)")
+                driver.find_element_by_xpath("//a[contains(@href,url)]").click()
+
                 time.sleep(5)
                 # Return the new querys to save on wordlist
                 return query;

@@ -1,1 +1,1 @@
-query="ScribdExploreEXPLORE   "
+query="Spinner   "
