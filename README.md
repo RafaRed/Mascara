@@ -2,9 +2,9 @@
 Privacy?
 
 # Motivation
-Today many websites track our data and generate our internet profile, it's obvious.
-If we just stop using then for a long time, will sound strange for the trackers, right?
-but what if we keep using these websites, gerenating fake stuff?
+Today many websites track our data and generate our internet profile, it's obvious.<br />
+If we just stop using then for a long time, will sound strange for the trackers, right?<br />
+but what if we keep using these websites, gerenating fake stuff?<br />
 
 # Main Objective
 Do random searches, making harder to services generate and sell the user data, profile.
