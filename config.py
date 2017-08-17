@@ -1,6 +1,6 @@
 topDir = "/DataFiles/TopWord"
 timer = 1;
-timerMax = 2;
+timerMax = 20;
 configDir = "/query.py"
 lastQueryDir = "/DataFiles/LastQuery"
 blacklistDir = "/DataFiles/BlackList"
