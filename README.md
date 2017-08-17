@@ -11,6 +11,6 @@ Do random searches, making harder to services generate and sell the user data, p
 
 # Working on
 May You can help me with it :)
-- use user google session, and turn it like a normal browser activity.
-- Search for query related stuff
+- Trigger a onmousedown event on HREF link
+- Develop an Artificial Inteligence to improve search grammar 
 - Select another services to work on.
